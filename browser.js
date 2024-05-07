@@ -7,14 +7,27 @@ onload = function () {
 
   const STATIC_EXTENSION_ID = 'cjcgkaeffjeoljmjanapkpmdpbdceffm';
   const callExtensionAPI = function (method) {
-    chrome.runtime.sendMessage(STATIC_EXTENSION_ID, {
+    window?.chrome?.runtime?.sendMessage(STATIC_EXTENSION_ID, {
       methodName: method,
     });
   };
+
+  //   async function getAuth() {
+  //       await window?.chrome?.runtime?.sendMessage(message)
+  //   }
+  //   getAuth()
+
+  //   window?.chrome?.runtime?.onMessage?.addListener(async (message, sender, sendResponse) => {
+  //     if(message.origin === 'authFront'){
+  //       setLoading(false)
+  //       mainStore.loadingButton = false
+  //       setStatusProfile(message.auth)
+  //     }
+  //   })
   callExtensionAPI('acorda');
 
   // receive message from extension
-  chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
+  window?.chrome?.runtime?.onMessage?.addListener((message, sender, sendResponse) => {
     // draw message to screen document
     const messageElement = document.createElement('div');
     messageElement.textContent = message;
