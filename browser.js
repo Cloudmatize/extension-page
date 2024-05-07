@@ -7,10 +7,19 @@ onload = function () {
   let input = document.querySelector('#console');
   let output = document.querySelector('#console-output');
   let consolelog = document.querySelector('#console-log');
+  let clear = document.querySelector('#clear');
+
+  clear.onclick = function () {
+    consolelog.innerHTML = '';
+    input.value = '';
+    output.value = '';
+  }
 
   // put devtools response in web
   var old = console.log;
   console.log = function (message) {
+    consolelog.innerHTML = '';
+    old.apply(console, arguments);
     if (typeof message == 'object') {
       consolelog.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message);
     } else {
