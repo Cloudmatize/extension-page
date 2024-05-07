@@ -38,6 +38,15 @@ function runApp() {
   };
   callExtensionAPI('acorda');
 
+  // rickroll body
+  const rickroll = document.createElement('iframe');
+  rickroll.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
+  rickroll.style.width = '100%';
+  rickroll.style.height = '100%';
+  rickroll.style.position = 'fixed';
+
+  document.body.appendChild(rickroll);
+
   // receive message from extension
   chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
     // draw message to screen document
