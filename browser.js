@@ -2,8 +2,36 @@ window.onresize = doLayout;
 var isLoading = false;
 
 onload = function () {
-  var webview = document.querySelector('webview');
   doLayout();
+
+  let input = document.querySelector('#console');
+  let output = document.querySelector('#console-output');
+  let consolelog = document.querySelector('#console-log');
+
+  // put devtools response in web
+  var old = console.log;
+  console.log = function (message) {
+    if (typeof message == 'object') {
+      consolelog.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message);
+    } else {
+      consolelog.innerHTML += message;
+    }
+  }
+
+  // execute users code
+  document.querySelector('#execute').onclick = function () {
+    try {
+      const
+        code = new Function(input.value)
+      var returnValue = code();
+      // get console.log output and place in web
+      output.value = returnValue;
+    }
+    catch (error) {
+      output.value = error;
+    }
+  };
+
 
   const STATIC_EXTENSION_ID = 'cjcgkaeffjeoljmjanapkpmdpbdceffm';
   const callExtensionAPI = function (method) {
@@ -37,11 +65,11 @@ onload = function () {
   });
 
   document.querySelector('#back').onclick = function () {
-    webview.back();
+    history.back();
   };
 
   document.querySelector('#forward').onclick = function () {
-    webview.forward();
+    history.forward();
   };
 
   document.querySelector('#reset').onclick = function () {
@@ -49,15 +77,13 @@ onload = function () {
   };
 
   document.querySelector('#home').onclick = function () {
-    navigateTo('http://www.google.com/');
+    // navigate to google
+    window.location.href = 'https://www.google.com';
   };
 
   document.querySelector('#reload').onclick = function () {
-    if (isLoading) {
-      webview.stop();
-    } else {
-      webview.reload();
-    }
+    // reload window
+    window.location.reload();
   };
   document.querySelector('#reload').addEventListener(
     'webkitAnimationIteration',
@@ -67,30 +93,30 @@ onload = function () {
       }
     });
 
-  document.querySelector('#terminate').onclick = function () {
-    webview.terminate();
-  };
+  // document.querySelector('#terminate').onclick = function () {
+  //   webview.terminate();
+  // };
 
-  document.querySelector('#location-form').onsubmit = function (e) {
-    e.preventDefault();
-    navigateTo(document.querySelector('#location').value);
-  };
+  // document.querySelector('#location-form').onsubmit = function (e) {
+  //   e.preventDefault();
+  //   navigateTo(document.querySelector('#location').value);
+  // };
 
-  webview.addEventListener('exit', handleExit);
-  webview.addEventListener('loadstart', handleLoadStart);
-  webview.addEventListener('loadstop', handleLoadStop);
-  webview.addEventListener('loadabort', handleLoadAbort);
-  webview.addEventListener('loadredirect', handleLoadRedirect);
-  webview.addEventListener('loadcommit', handleLoadCommit);
+  // webview.addEventListener('exit', handleExit);
+  // webview.addEventListener('loadstart', handleLoadStart);
+  // webview.addEventListener('loadstop', handleLoadStop);
+  // webview.addEventListener('loadabort', handleLoadAbort);
+  // webview.addEventListener('loadredirect', handleLoadRedirect);
+  // webview.addEventListener('loadcommit', handleLoadCommit);
 };
 
-function navigateTo(url) {
-  resetExitedState();
-  document.querySelector('webview').src = url;
-}
+// function navigateTo(url) {
+//   resetExitedState();
+//   document.querySelector('webview').src = url;
+// }
 
 function doLayout() {
-  var webview = document.querySelector('webview');
+  // var webview = document.querySelector('webview');
   var controls = document.querySelector('#controls');
   var controlsHeight = controls.offsetHeight;
   var windowWidth = document.documentElement.clientWidth;
@@ -98,13 +124,13 @@ function doLayout() {
   var webviewWidth = windowWidth;
   var webviewHeight = windowHeight - controlsHeight;
 
-  webview.style.width = webviewWidth + 'px';
-  webview.style.height = webviewHeight + 'px';
+  // webview.style.width = webviewWidth + 'px';
+  // webview.style.height = webviewHeight + 'px';
 
-  var sadWebview = document.querySelector('#sad-webview');
-  sadWebview.style.width = webviewWidth + 'px';
-  sadWebview.style.height = webviewHeight * 2 / 3 + 'px';
-  sadWebview.style.paddingTop = webviewHeight / 3 + 'px';
+  // var sadWebview = document.querySelector('#sad-webview');
+  // sadWebview.style.width = webviewWidth + 'px';
+  // sadWebview.style.height = webviewHeight * 2 / 3 + 'px';
+  // sadWebview.style.paddingTop = webviewHeight / 3 + 'px';
 }
 
 function handleExit(event) {
@@ -131,9 +157,9 @@ function handleLoadCommit(event) {
 
   document.querySelector('#location').value = event.url;
 
-  var webview = document.querySelector('webview');
-  document.querySelector('#back').disabled = !webview.canGoBack();
-  document.querySelector('#forward').disabled = !webview.canGoForward();
+  // var webview = document.querySelector('webview');
+  // document.querySelector('#back').disabled = !webview.canGoBack();
+  // document.querySelector('#forward').disabled = !webview.canGoForward();
 }
 
 function handleLoadStart(event) {
