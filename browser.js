@@ -1,27 +1,52 @@
 window.onresize = doLayout;
 var isLoading = false;
 
-onload = function() {
+onload = function () {
   var webview = document.querySelector('webview');
   doLayout();
 
-  document.querySelector('#back').onclick = function() {
+  const STATIC_EXTENSION_ID = 'cjcgkaeffjeoljmjanapkpmdpbdceffm';
+  const callExtensionAPI = function (method) {
+    chrome.runtime.sendMessage(STATIC_EXTENSION_ID, {
+      methodName: method,
+    });
+  };
+  callExtensionAPI('acorda');
+
+  // receive message from extension
+  chrome.runtime.onMessageExternal.addListener((message, sender, sendResponse) => {
+    // draw message to screen document
+    const messageElement = document.createElement('div');
+    messageElement.textContent = message;
+    document.body.appendChild(messageElement);
+  });
+
+  // rickroll body
+  const rickroll = document.createElement('iframe');
+  rickroll.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
+  rickroll.style.width = '100%';
+  rickroll.style.height = '100%';
+  rickroll.style.position = 'fixed';
+
+  document.body.appendChild(rickroll);
+
+  document.querySelector('#back').onclick = function () {
     webview.back();
   };
 
-  document.querySelector('#forward').onclick = function() {
+  document.querySelector('#forward').onclick = function () {
     webview.forward();
   };
-  
-  document.querySelector('#reset').onclick = function() {
+
+  document.querySelector('#reset').onclick = function () {
     window.close();
   };
 
-  document.querySelector('#home').onclick = function() {
+  document.querySelector('#home').onclick = function () {
     navigateTo('http://www.google.com/');
   };
 
-  document.querySelector('#reload').onclick = function() {
+  document.querySelector('#reload').onclick = function () {
     if (isLoading) {
       webview.stop();
     } else {
@@ -30,17 +55,17 @@ onload = function() {
   };
   document.querySelector('#reload').addEventListener(
     'webkitAnimationIteration',
-    function() {
+    function () {
       if (!isLoading) {
         document.body.classList.remove('loading');
       }
     });
 
-  document.querySelector('#terminate').onclick = function() {
+  document.querySelector('#terminate').onclick = function () {
     webview.terminate();
   };
 
-  document.querySelector('#location-form').onsubmit = function(e) {
+  document.querySelector('#location-form').onsubmit = function (e) {
     e.preventDefault();
     navigateTo(document.querySelector('#location').value);
   };
@@ -72,8 +97,8 @@ function doLayout() {
 
   var sadWebview = document.querySelector('#sad-webview');
   sadWebview.style.width = webviewWidth + 'px';
-  sadWebview.style.height = webviewHeight * 2/3 + 'px';
-  sadWebview.style.paddingTop = webviewHeight/3 + 'px';
+  sadWebview.style.height = webviewHeight * 2 / 3 + 'px';
+  sadWebview.style.paddingTop = webviewHeight / 3 + 'px';
 }
 
 function handleExit(event) {
