@@ -30,18 +30,11 @@ onload = function () {
   window?.chrome?.runtime?.onMessage?.addListener((message, sender, sendResponse) => {
     // draw message to screen document
     const messageElement = document.createElement('div');
-    messageElement.textContent = message;
+    messageElement.textContent = 'TESTE MESSAGE FROM EXTENSION';
+    messageElement.style.color = 'red';
+    messageElement.style.fontSize = '20px';
     document.body.appendChild(messageElement);
   });
-
-  // rickroll body
-  const rickroll = document.createElement('iframe');
-  rickroll.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
-  rickroll.style.width = '100%';
-  rickroll.style.height = '100%';
-  rickroll.style.position = 'fixed';
-
-  document.body.appendChild(rickroll);
 
   document.querySelector('#back').onclick = function () {
     webview.back();
