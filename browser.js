@@ -13,7 +13,7 @@ onload = function () {
   // window.postMessage({ action: 'minhaAcao', dados: 'meusDados' });
 
   // Enviar mensagem para o service worker
-  window.postMessage({ action: 'minhaAcao', dados: 'meusDados' });
+  // window.postMessage({ action: 'minhaAcao', dados: 'meusDados' });
 
   // window.addEventListener(
   //   "message",

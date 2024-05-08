@@ -42,6 +42,13 @@ function runApp() {
   //   }
   // });
 
+  // faça uma interação na tela
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { resposta: 'minhaResposta', maisDados: 'outrosDados' }, function (response) {
+      console.log(response)
+    });
+  });
+
   navigator.serviceWorker.addEventListener('message', event => {
     // Manipular a mensagem recebida
     event.source.postMessage({ resposta: 'minhaResposta', maisDados: 'outrosDados' });
