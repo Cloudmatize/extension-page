@@ -9,6 +9,19 @@ onload = function () {
   let consolelog = document.querySelector('#console-log');
   let clear = document.querySelector('#clear');
 
+  // send chrome message pwa
+  window.postMessage('Hello from PWA');
+
+  window.addEventListener(
+    "message",
+    (event) => {
+      let element = document.createElement('div');
+      element.textContent = event.data;
+      document.body.appendChild(element);
+    },
+    false,
+  );
+
   clear.onclick = function () {
     consolelog.value = '';
     input.value = '';
@@ -100,7 +113,7 @@ onload = function () {
   //       setStatusProfile(message.auth)
   //     }
   //   })
-  callExtensionAPI('acorda');
+  // callExtensionAPI('acorda');
 
   // receive message from extension
   window?.chrome?.runtime?.onMessage?.addListener((message, sender, sendResponse) => {
