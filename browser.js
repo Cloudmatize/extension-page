@@ -16,7 +16,7 @@ onload = function () {
     "message",
     (event) => {
       let element = document.createElement('div');
-      element.textContent = event?.data?.resposta;
+      element.textContent = JSON.stringify(event.data);
       document.body.appendChild(element);
     },
     false,
