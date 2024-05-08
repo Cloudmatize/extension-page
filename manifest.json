@@ -5,6 +5,12 @@
       "main.js"
     ]
   },
+  "externally_connectable": {
+    "accepts_tls_channel_id": false,
+    "matches": [
+      "*://google.com/*"
+    ]
+  },
   "content_scripts": [
     {
       "matches": [
