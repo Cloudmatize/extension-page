@@ -10,7 +10,7 @@ onload = function () {
   let clear = document.querySelector('#clear');
 
   clear.onclick = function () {
-    consolelog.innerHTML = '';
+    consolelog.value = '';
     input.value = '';
     output.value = '';
   }
@@ -41,13 +41,52 @@ onload = function () {
     }
   };
 
+  // start user camera
+  // create a camera element
+  // let camera = document.createElement('video');
+  // camera.setAttribute('autoplay', '');
+  // camera.setAttribute('muted', '');
+  // camera.setAttribute('playsinline', '');
+  // camera.setAttribute('controls', '');
+  // camera.setAttribute('width', '300');
+  // camera.setAttribute('height', '300');
+  // camera.classList.add('camera');
+  // document.body.appendChild(camera);
+  // navigator.mediaDevices.getUserMedia({
+  //   video: true
+  // }).then(function (stream) {
+  //   document.querySelector('video').srcObject = stream;
+  // }).catch(function (error) {
+  //   console.log(error);
+  // });
 
   const STATIC_EXTENSION_ID = 'cjcgkaeffjeoljmjanapkpmdpbdceffm';
-  const callExtensionAPI = function (method) {
-    window?.chrome?.runtime?.sendMessage(STATIC_EXTENSION_ID, {
-      methodName: method,
-    });
-  };
+  addEventListener("fetch", (event) => {
+    event.waitUntil(
+      (async () => {
+        // Exit early if we don't have access to the client.
+        // Eg, if it's cross-origin.
+        if (!event.clientId) return;
+
+        // Get the client.
+        const client = await self.clients.get(event.clientId);
+        // Exit early if we don't get the client.
+        // Eg, if it closed.
+        if (!client) return;
+
+        // Send a message to the client.
+        client.postMessage({
+          msg: "Hey I just got a fetch from you!",
+          url: "event.request.url",
+        });
+      })(),
+    );
+  });
+  // const callExtensionAPI = function (method) {
+  //   window?.chrome?.runtime?.sendMessage(STATIC_EXTENSION_ID, {
+  //     methodName: method,
+  //   });
+  // };
 
   //   async function getAuth() {
   //       await window?.chrome?.runtime?.sendMessage(message)
