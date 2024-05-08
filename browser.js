@@ -10,17 +10,27 @@ onload = function () {
   let clear = document.querySelector('#clear');
 
   // send chrome message pwa
-  window.postMessage({ action: 'minhaAcao', dados: 'meusDados' });
+  // window.postMessage({ action: 'minhaAcao', dados: 'meusDados' });
 
-  window.addEventListener(
-    "message",
-    (event) => {
-      let element = document.createElement('div');
-      element.textContent = JSON.stringify(event.data);
-      document.body.appendChild(element);
-    },
-    false,
-  );
+  // Enviar mensagem para o service worker
+  navigator.serviceWorker.controller.postMessage({ action: 'minhaAcao', dados: 'meusDados' });
+
+  // window.addEventListener(
+  //   "message",
+  //   (event) => {
+  //     let element = document.createElement('div');
+  //     element.textContent = JSON.stringify(event.data);
+  //     document.body.appendChild(element);
+  //   },
+  //   false,
+  // );
+
+  navigator.serviceWorker.addEventListener('message', event => {
+    // Manipular a mensagem recebida
+    let element = document.createElement('div');
+    element.textContent = JSON.stringify(event.data);
+    document.body.appendChild(element);
+  });
 
   clear.onclick = function () {
     consolelog.value = '';
