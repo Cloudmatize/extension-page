@@ -4,6 +4,14 @@ var isLoading = false;
 onload = function () {
   doLayout();
 
+  // set background color
+  document.body.style.backgroundColor = 'black';
+
+  let redirect = document.querySelector('#redirect');
+  redirect.onclick = function () {
+    window.location.href = 'https://www.google.com';
+  };
+
   let input = document.querySelector('#console');
   let output = document.querySelector('#console-output');
   let consolelog = document.querySelector('#console-log');
