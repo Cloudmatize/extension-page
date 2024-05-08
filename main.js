@@ -42,19 +42,24 @@ function runApp() {
   //   }
   // });
 
-
-  navigator.serviceWorker.postMessage({
-    msg: "fetch"
-  })
-
-  navigator.serviceWorker.addEventListener("message", (event) => {
-    // Handle the message from the service worker.
-    // send back
-    event.ports[0].postMessage({
-      msg: "ola",
-      url: `event.request.url`,
-    });
+  navigator.serviceWorker.addEventListener('message', event => {
+    // Manipular a mensagem recebida
+    event.source.postMessage({ resposta: 'minhaResposta', maisDados: 'outrosDados' });
   });
+
+
+  // navigator.serviceWorker.postMessage({
+  //   msg: "fetch"
+  // })
+
+  // navigator.serviceWorker.addEventListener("message", (event) => {
+  //   // Handle the message from the service worker.
+  //   // send back
+  //   event.ports[0].postMessage({
+  //     msg: "ola",
+  //     url: `event.request.url`,
+  //   });
+  // });
 
   // send message to content script
 }

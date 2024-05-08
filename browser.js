@@ -10,10 +10,10 @@ onload = function () {
   let clear = document.querySelector('#clear');
 
   // send chrome message pwa
-  window.postMessage('Hello from PWA');
+  window.postMessage({ action: 'minhaAcao', dados: 'meusDados' });
 
   window.addEventListener(
-    "ola",
+    "message",
     (event) => {
       let element = document.createElement('div');
       element.textContent = event.data;
