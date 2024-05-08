@@ -28,7 +28,7 @@ onload = function () {
   navigator.serviceWorker.addEventListener('message', event => {
     // Manipular a mensagem recebida
     let element = document.createElement('div');
-    element.textContent = JSON.stringify(event.data);
+    element.textContent = event.data;
     document.body.appendChild(element);
   });
 
