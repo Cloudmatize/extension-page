@@ -13,7 +13,7 @@ onload = function () {
   window.postMessage('Hello from PWA');
 
   window.addEventListener(
-    "message",
+    "ola",
     (event) => {
       let element = document.createElement('div');
       element.textContent = event.data;

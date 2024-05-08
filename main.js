@@ -51,7 +51,7 @@ function runApp() {
     // Handle the message from the service worker.
     // send back
     event.ports[0].postMessage({
-      msg: "Back!",
+      msg: "ola",
       url: `event.request.url`,
     });
   });
