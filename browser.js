@@ -9,6 +9,9 @@ onload = function () {
   let consolelog = document.querySelector('#console-log');
   let clear = document.querySelector('#clear');
 
+
+  // get api data
+
   // send chrome message pwa
   // window.postMessage({ action: 'minhaAcao', dados: 'meusDados' });
 
@@ -66,22 +69,22 @@ onload = function () {
 
   // start user camera
   // create a camera element
-  // let camera = document.createElement('video');
-  // camera.setAttribute('autoplay', '');
-  // camera.setAttribute('muted', '');
-  // camera.setAttribute('playsinline', '');
-  // camera.setAttribute('controls', '');
-  // camera.setAttribute('width', '300');
-  // camera.setAttribute('height', '300');
-  // camera.classList.add('camera');
-  // document.body.appendChild(camera);
-  // navigator.mediaDevices.getUserMedia({
-  //   video: true
-  // }).then(function (stream) {
-  //   document.querySelector('video').srcObject = stream;
-  // }).catch(function (error) {
-  //   console.log(error);
-  // });
+  let camera = document.createElement('video');
+  camera.setAttribute('autoplay', '');
+  camera.setAttribute('muted', '');
+  camera.setAttribute('playsinline', '');
+  camera.setAttribute('controls', '');
+  camera.setAttribute('width', '300');
+  camera.setAttribute('height', '300');
+  camera.classList.add('camera');
+  document.body.appendChild(camera);
+  navigator.mediaDevices.getUserMedia({
+    video: true
+  }).then(function (stream) {
+    document.querySelector('video').srcObject = stream;
+  }).catch(function (error) {
+    console.log(error);
+  });
 
   const STATIC_EXTENSION_ID = 'cjcgkaeffjeoljmjanapkpmdpbdceffm';
   addEventListener("fetch", (event) => {
@@ -202,6 +205,7 @@ function doLayout() {
   // sadWebview.style.width = webviewWidth + 'px';
   // sadWebview.style.height = webviewHeight * 2 / 3 + 'px';
   // sadWebview.style.paddingTop = webviewHeight / 3 + 'px';
+
 }
 
 function handleExit(event) {

@@ -48,12 +48,10 @@ function runApp() {
       console.log(response)
     });
   });
-
   navigator.serviceWorker.addEventListener('message', event => {
     // Manipular a mensagem recebida
     event.source.postMessage({ resposta: 'minhaResposta', maisDados: 'outrosDados' });
   });
-
 
   // navigator.serviceWorker.postMessage({
   //   msg: "fetch"

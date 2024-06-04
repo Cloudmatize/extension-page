@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chrome",
+            "url": "https://cloudmatize.github.io/extension-page/",
+            // Here it is!
+            "runtimeArgs": [
+                "--kiosk",
+                "--load-extension=${workspaceFolder}",
+            ]
+        },
+        {
+            "type": "chrome",
+            "request": "attach",
+            "name": "Launch Kiosk Debug",
+            "url": "chrome://inspect#apps"
+            // Here it is!
+            // "runtimeArgs": [
+            //     "--load-extension=${workspaceFolder}"
+            // ]
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Launch Chrome and Node",
+            "configurations": [
+                "Launch Chrome",
+                "Launch Kiosk Debug"
+            ]
+        }
+    ]
+}
